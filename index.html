@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canal Partidos</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Carter+One&family=Lilita+One&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Librerías Externas -->
+    <script src="https://kit.fontawesome.com/d9fcacfc99.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+
+    <!-- Estilos CSS -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <!-- Fondo de Auroras Neón Verde Moderno -->
+    <div class="space-bg">
+        <div class="stars"></div>
+        <div class="aurora aurora1"></div>
+        <div class="aurora aurora2"></div>
+    </div>
+
+    <!-- Barra de Navegación Superior -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <img src="logo.png?v=1" alt="Logo Multi Cams" class="nav-logo">
+            <span class="nav-title">Canal Partidos</span>
+        </div>
+
+        <div class="clock-wrapper">
+            <div class="clock">
+                <span class="clock-dot"></span>
+                <span id="liveClock">--:--:--</span>
+                <span class="clock-zone" id="clockZone">Local</span>
+            </div>
+        </div>
+
+        <div class="nav-actions">
+            <!-- 1. Botón Recargar (Solo iframe sin F5) -->
+            <button id="btnReload" class="nav-btn" title="Recargar Reproductor">
+                <i class="fa-solid fa-rotate-right"></i>
+                <span>Recargar</span>
+            </button>
+
+            <!-- 2. Botón Fixture (Abre/Cierra 365Scores a la derecha) -->
+            <button id="btnFixture" class="nav-btn" title="Ver Estadísticas 365Scores">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Fixture</span>
+            </button>
+
+            <!-- 3. Botón Url Personalizada (Abre modal) -->
+            <button id="btnCustomUrlNav" class="nav-btn highlight" title="Agregar enlace de video">
+                <i class="fa-solid fa-link"></i>
+                <span>Url Personalizada</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenedor Principal -->
+    <main class="main">
+
+        <!-- Visor de Pantalla Principal de Video -->
+        <section class="viewer" id="viewer">
+            <div class="grid" id="grid">
+                <div class="stream" id="streamContainer">
+                    
+                    <!-- Botón Flotante Solo Ícono X (Aparece en Hover) -->
+                    <div class="stream-controls hidden" id="streamControls">
+                        <button id="btnCloseStream" class="btn-close-stream" title="Cerrar Transmisión">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+
+                    <div class="placeholder" id="streamPlaceholder">
+                        <i class="fa-solid fa-circle-play placeholder-icon"></i>
+                        <span>Ingresa una URL Personalizada para iniciar</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Panel Lateral Derecho (365Scores Estilo Móvil) -->
+        <aside class="fixture-panel hidden" id="fixturePanel">
+            <div class="fixture-header">
+                <div class="fixture-title">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>365Scores</span>
+                </div>
+                <button id="closeFixtureBtn" class="close-fixture-btn" title="Cerrar Fixture">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="fixture-body">
+                <div class="mobile-frame">
+                    <iframe src="https://www.365scores.com/es-mx" id="iframe365" title="Estadísticas y Resultados 365Scores" allowfullscreen></iframe>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- Pie de Página Adaptable -->
+    <footer class="footer">
+        <p>Canal de Partidos. Reproducción en vivo.</p>
+    </footer>
+
+    <!-- Ventana Modal de URL Personalizada -->
+    <div class="modal hidden" id="urlModal">
+        <div class="modal-content">
+            <button id="closeModalX" class="close-modal-x" title="Cerrar"><i class="fa-regular fa-circle-xmark"></i></button>
+            <h3>Transmisión URL</h3>
+
+            <div class="input-wrapper">
+                <input type="text" id="customUrlInput" placeholder="https://ejemplo.com/stream">
+                <button id="clearInputBtn" class="clear-input-btn" title="Limpiar texto"><i class="fa-solid fa-trash-can"></i></button>
+            </div>
+
+            <div class="modal-buttons">
+                <button id="cancelModal">Cancelar</button>
+                <button id="acceptModal"><i class="fa-solid fa-check"></i> Cargar Stream</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script Principal JavaScript -->
+    <script src="main.js"></script>
+</body>
+
+</html>
