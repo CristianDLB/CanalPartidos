@@ -128,12 +128,11 @@ closeFixtureBtn.addEventListener("click", () => {
                     marginwidth="0"
                     marginheight="0"
                     allow="autoplay; encrypted-media; picture-in-picture; fullscreen" 
-                    sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation"
                     allowfullscreen>
                 </iframe>
             </div>
         `;
-
+        // sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" EN IFRAME
         // Re-vincular evento de cierre para el botón dinámico
         document.getElementById("btnCloseStream").addEventListener("click", clearStream);
     }
