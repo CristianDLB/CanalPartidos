@@ -17,6 +17,7 @@
     <!-- Librerías Externas -->
     <script src="https://kit.fontawesome.com/d9fcacfc99.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/3.4.4/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 
     <!-- Estilos CSS -->
     <link rel="stylesheet" href="estilos.css">
@@ -92,16 +93,6 @@
 
         <!-- Panel Lateral Derecho (365Scores Estilo Móvil) -->
         <aside class="fixture-panel hidden" id="fixturePanel">
-            <div class="fixture-header">
-                <div class="fixture-title">
-                    <i class="fa-solid fa-trophy"></i>
-                    <span>365Scores</span>
-                </div>
-                <button id="closeFixtureBtn" class="close-fixture-btn" title="Cerrar Fixture">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-
             <div class="fixture-body">
                 <div class="mobile-frame">
                     <iframe src="https://www.365scores.com/es-mx" id="iframe365" title="Estadísticas y Resultados 365Scores" allowfullscreen></iframe>

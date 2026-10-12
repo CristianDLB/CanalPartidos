@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnCustomUrlNav = document.getElementById("btnCustomUrlNav");
 
     const fixturePanel = document.getElementById("fixturePanel");
-    const closeFixtureBtn = document.getElementById("closeFixtureBtn");
 
     const streamContainer = document.getElementById("streamContainer");
     const streamControls = document.getElementById("streamControls");
@@ -24,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const liveClockElement = document.getElementById("liveClock");
     const clockZoneElement = document.getElementById("clockZone");
 
-    // 1. RECARGAR REPRODUCTOR (Sin recargar la página entera)
+    // 1. RECARGAR REPRODUCTOR
     btnReload.addEventListener("click", () => {
         const iframe = streamContainer.querySelector("iframe");
         if (iframe && currentStreamUrl) {
@@ -43,23 +42,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 2. MOSTRAR / OCULTAR FIXTURE 365SCORES
-btnFixture.addEventListener("click", () => {
+    btnFixture.addEventListener("click", () => {
         fixturePanel.classList.toggle("hidden");
 
-        // Dispara la re-evaluación del tamaño de los menús dentro del reproductor
         setTimeout(() => {
             window.dispatchEvent(new Event("resize"));
         }, 150);
     });
 
-closeFixtureBtn.addEventListener("click", () => {
-        fixturePanel.classList.add("hidden");
-
-        // Dispara la re-evaluación del tamaño de los menús dentro del reproductor
-        setTimeout(() => {
-            window.dispatchEvent(new Event("resize"));
-        }, 150);
-    });
     // 3. MODAL DE URL PERSONALIZADA
     function openUrlModal() {
         customUrlInput.value = currentStreamUrl;
@@ -99,7 +89,7 @@ closeFixtureBtn.addEventListener("click", () => {
         setInterval(updateClock, 1000);
     }
 
-    // CARGAR STREAM EN ESTRUCTURA VISUAL COMPLETA MULTICAMS
+    // CARGAR STREAM
     acceptModalBtn.addEventListener("click", () => {
         const newUrl = customUrlInput.value.trim();
         if (newUrl) {
@@ -113,7 +103,13 @@ closeFixtureBtn.addEventListener("click", () => {
     function loadStream(url) {
         currentStreamUrl = url;
 
-        // Renderiza el contenedor de video completo con atributos para evitar el scroll
+        const extensionId = "opmeopcambhfimffbomjgemehjkbbmji";
+        let targetSrc = url;
+
+        if (url.includes(".m3u8") || url.includes(".mpd")) {
+            targetSrc = `chrome-extension://${extensionId}/pages/player.html#${url}`;
+        }
+
         streamContainer.innerHTML = `
             <div class="stream-controls" id="streamControls">
                 <button id="btnCloseStream" class="btn-close-stream" title="Cerrar Transmisión">
@@ -122,7 +118,7 @@ closeFixtureBtn.addEventListener("click", () => {
             </div>
             <div class="iframe-wrapper">
                 <iframe 
-                    src="${url}" 
+                    src="${targetSrc}" 
                     scrolling="no"
                     frameborder="0"
                     marginwidth="0"
@@ -132,8 +128,7 @@ closeFixtureBtn.addEventListener("click", () => {
                 </iframe>
             </div>
         `;
-        // sandbox="allow-forms allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" EN IFRAME
-        // Re-vincular evento de cierre para el botón dinámico
+
         document.getElementById("btnCloseStream").addEventListener("click", clearStream);
     }
 
